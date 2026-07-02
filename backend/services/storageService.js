@@ -101,7 +101,7 @@ export async function initStorage() {
   try {
     await Promise.race([
       client.connect(),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000))
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 8000))
     ]);
 
     storageInstance = new RedisStorage(client);
