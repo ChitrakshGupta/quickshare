@@ -142,3 +142,29 @@ To launch the entire stack concurrently (both frontend client and backend server
    * `FRONTEND_URL` = `https://your-app.vercel.app`
 3. **Frontend**: Host the root folder on **Vercel** or **Netlify**. Set the build command to `npm run build` and add environment variable:
    * `VITE_API_URL` = `https://your-api.onrender.com/api/share`
+
+---
+
+## 🔮 Future Roadmap & Enhancements
+
+Here are several advanced features planned for subsequent iterations of the QuickShare platform:
+
+### 1. Zero-Knowledge Cryptography (Client-Side)
+- Implement end-to-end encryption using browser-native **Web Crypto API (256-bit AES-GCM)**. 
+- The encryption key is appended as a URL hash fragment (`https://quickshare.dev/?code=X4P9#key=SECRET`). Because browser URL hash fragments are kept client-side, the decryption key is **never sent to the server**, ensuring absolute privacy.
+
+### 2. Monaco Editor Integration
+- Replace the raw code textarea with the **Monaco Editor** (the code engine behind VS Code). 
+- This adds developer features like automated code completions, folder-scoped search, mini-maps, bracket matching, and multi-cursor hotkeys.
+
+### 3. P2P Direct File Streaming (WebRTC)
+- For sharing files larger than 10MB, bypass server memory completely by implementing direct peer-to-peer data channels using **WebRTC**. 
+- The receiver streams the file directly from the sender's active browser cache, removing database storage limits and bandwidth costs.
+
+### 4. QuickShare Command-Line Client (`quickshare-cli`)
+- Build a lightweight CLI tool to pipe terminal configurations and logs directly to the cloud.
+- *Usage*: `cat logs.txt | quickshare` immediately generates a 4-digit code and copies the share URL to the system clipboard.
+
+### 5. Interactive Code Sandbox
+- Integrate secure `iframe` execution sandboxes (e.g. CodeSandbox or custom runners) to execute HTML/JS, Python, or TypeScript code directly inside the retrieve page.
+
