@@ -93,7 +93,11 @@ let storageInstance = null;
 export async function initStorage() {
   if (storageInstance) return storageInstance;
 
-  const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+  let redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+  if (redisUrl.includes('.upstash.io') && redisUrl.startsWith('redis://')) {
+    redisUrl = redisUrl.replace('redis://', 'rediss://');
+    console.log('Storage: Automatically upgraded Upstash Redis URL to secure rediss:// protocol.');
+  }
   const client = createClient({ url: redisUrl });
 
   client.on('error', () => {});
