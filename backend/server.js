@@ -11,9 +11,35 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+let frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+if (frontendUrl.endsWith('/')) {
+  frontendUrl = frontendUrl.slice(0, -1);
+}
+
 app.use(cors({
-  origin: [frontendUrl, 'http://127.0.0.1:5173', 'http://localhost:5174', 'http://localhost:3000'],
+  origin: function (origin, callback) {
+    // Allow server-to-server or script requests with no origin
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      frontendUrl,
+      'http://localhost:5173',
+      'http://localhost:5174',
+      'http://localhost:3000',
+      'http://127.0.0.1:5173',
+      'http://127.0.0.1:5174'
+    ];
+    
+    const isAllowed = allowedOrigins.includes(origin) || 
+                      origin.endsWith('.vercel.app') || 
+                      /^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin);
+                      
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      callback(new Error(`Origin ${origin} not allowed by CORS`));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
