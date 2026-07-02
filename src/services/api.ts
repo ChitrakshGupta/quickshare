@@ -1,5 +1,18 @@
-const host = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
-const API_BASE_URL = import.meta.env.VITE_API_URL || `http://${host}:5001/api/share`;
+export function getBackendUrl(): string {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl) {
+    try {
+      const parsed = new URL(envUrl);
+      return parsed.origin;
+    } catch (e) {
+      console.warn("Invalid VITE_API_URL format:", envUrl);
+    }
+  }
+  const host = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
+  return `http://${host}:5001`;
+}
+
+const API_BASE_URL = `${getBackendUrl()}/api/share`;
 
 export interface SharePayload {
   content: string;

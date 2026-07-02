@@ -6,8 +6,9 @@ import {
   FileText, Download, RefreshCw, Radio
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { getBackendUrl } from '../services/api';
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5001';
+const SOCKET_URL = getBackendUrl();
 
 interface User {
   socketId: string;
