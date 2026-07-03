@@ -257,7 +257,7 @@ export default function RetrievePaste({ initialCode, onClearCode }: RetrievePast
               type="text" 
               placeholder="Enter Code (e.g. X4P9)"
               value={code}
-              onChange={(e) => setCode(e.target.value.trim())}
+              onChange={(e) => setCode(e.target.value.trim().toUpperCase())}
               maxLength={10}
               className="w-full rounded-2xl p-4 pl-12 text-lg font-mono font-bold tracking-widest glass-input text-slate-800 dark:text-slate-200 uppercase outline-none"
               required

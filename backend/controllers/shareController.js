@@ -65,7 +65,7 @@ export async function createShare(req, res) {
 
 export async function getShare(req, res) {
   try {
-    const { code } = req.params;
+    const code = req.params.code.toUpperCase();
     const storage = await getStorage();
     const raw = await storage.get(code);
 
@@ -105,7 +105,7 @@ export async function getShare(req, res) {
 
 export async function verifyPassword(req, res) {
   try {
-    const { code } = req.params;
+    const code = req.params.code.toUpperCase();
     const { password } = req.body;
 
     if (!password) {
